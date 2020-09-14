@@ -1,0 +1,1 @@
+# terminalka_algeom
