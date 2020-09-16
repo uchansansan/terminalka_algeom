@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include <stdio.h>
 #include <math.h>
 
@@ -12,8 +13,12 @@ int main(void) {
 	scanf("%d", &n);
 	double r = sqrt(a*a + b*b);//модуль
 	double r1 = a*a + b*b;
-	printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,acos((double)a/r), asin((double)b/r));
-
+  if(a>0)
+	  printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,atan((double)b/a), atan((double)b/a));
+  if((a<0)&&(b>0))
+    printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,atan((double)b/a)+M_PI, atan((double)b/a)+M_PI);
+  if((a<0)&&(b<0))
+    printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,atan((double)b/a)-M_PI, atan((double)b/a)-M_PI);
 	printf("Число обратное данному: %lf/%lf+i*%lf/%lf\n",a,r1,b,r1);
 
 	printf("Число в степени n: %lf*(cos(%lf)+isin(%lf))\n",pow(r,(double)n), n*acos((double)a/r), n*asin((double)b/r));
