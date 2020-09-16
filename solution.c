@@ -17,15 +17,15 @@ int main(void) {
 		printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,atan((double)b/a), atan((double)b/a));
 	else if (a < 0){
 		if(b>=0)
-    		printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,atan((double)b/a)+M_PI, atan((double)b/a)+M_PI);
-    	else
-    		printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,atan((double)b/a)-M_PI, atan((double)b/a)-M_PI);
+    			printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,atan((double)b/a)+M_PI, atan((double)b/a)+M_PI);
+    		else
+    			printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,atan((double)b/a)-M_PI, atan((double)b/a)-M_PI);
 	}
 	else if (a==0){
 		if(b>=0)
-    		printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,atan((double)b/a)+M_PI, atan((double)b/a)+M_PI);
-    	else
-    		printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,M_PI/2, M_PI/2);	
+    			printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,atan((double)b/a)+M_PI, atan((double)b/a)+M_PI);
+    		else
+    			printf("Тригонометрическая запись числа: %lf*(cos(%lf)+isin(%lf))\n",r,M_PI/2, M_PI/2);	
 	}
 
 	printf("Число обратное данному: %lf/%lf+i*%lf/%lf\n",a,r1,-b,r1);
