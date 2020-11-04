@@ -1,8 +1,7 @@
+#define e 0.000000001
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-const double exp = 0.000000001;
 
 int rank(double** mas, int i, int j){
    int r = 0;
@@ -10,7 +9,7 @@ int rank(double** mas, int i, int j){
    for (int t = 0; t < i; t++)
    {
       u = mas[t][j - 1];
-      if (fabsl(u) < exp)
+      if (fabsl(u) < e)
          break;
       r++;
    }
@@ -21,10 +20,10 @@ void gauss(double** mas, int i, int j, int i0, int j0){
    if (i0 == (i - 1))
       return;
    else if (j0 == (j - 1)){
-      if (fabsl(mas[i0][j0] - 0) < exp)
+      if (fabsl(mas[i0][j0] - 0) < e)
          for (int t = i0; t < i; t++)
          {
-            if (fabsl(mas[t][j - 1] - 0) >= exp)
+            if (fabsl(mas[t][j - 1] - 0) >= e)
             {
                mas[i0][j0] = mas[t][j - 1];
                break;
@@ -40,7 +39,7 @@ void gauss(double** mas, int i, int j, int i0, int j0){
    double* tm;
    while (flag == 0){
       for (int r = j0; r < j; r++)
-         if (fabsl(mas[i0][r] - 0) >= exp){
+         if (fabsl(mas[i0][r] - 0)>=e){
             flag++;
             break;
          }
@@ -54,7 +53,7 @@ void gauss(double** mas, int i, int j, int i0, int j0){
       }
    }
 
-   while (fabsl(mas[i0][j0] - 0) < exp){
+   while (fabsl(mas[i0][j0] - 0) < e){
       if (i0 == shift){
          gauss(mas, i, j, i0, j0 + 1);
          return;
@@ -98,5 +97,4 @@ int main(void){
    for (int i = 0; i < k; i++)
       free(str[i]);
    free(str);
-   return 0;
 }
