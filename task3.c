@@ -5,15 +5,17 @@
 
 int rank(double** mas, int i, int j){
    int r = 0;
-   double u;
-   for (int t = 0; t < i; t++)
-   {
-      u = mas[t][j - 1];
-      if (fabsl(u) < e)
-         break;
-      r++;
-   }
-   return r;
+   double u=0;
+   
+   for(int n=0;n<i;n++){
+	   for(int m=0;m<j;m++){
+		   u+=fabsl(mas[n][m]);
+		 }
+		if (u==0)
+			r++;
+		u=0;
+	}
+   return i-r;
 }
 
 void gauss(double** mas, int i, int j, int i0, int j0){
@@ -75,26 +77,37 @@ void gauss(double** mas, int i, int j, int i0, int j0){
    return;
 }
 
+void printmat(double** mas, int n, int k){
+	for(int i=0;i<n;i++){
+		for(int j=0;j<k;j++){
+			printf("%lf ",mas[i][j]);
+			}
+		printf("\n");
+		}
+	
+	}
+
 int main(void){
    int n;
    int k;
    printf("Enter n and k\n");
    scanf("%d %d", &n, &k);
-   double** str = (double**)malloc(sizeof(double*) * k);
-   for (int i = 0; i < k; i++){
-      str[i] = (double*)malloc(sizeof(double) * n);
-      for (int j = 0; j < n; j++)
+   double** str = (double**)malloc(sizeof(double*) * n);
+   for (int i = 0; i < n; i++){
+      str[i] = (double*)malloc(sizeof(double) * k);
+      for (int j = 0; j < k; j++)
          scanf("%lf", &str[i][j]);
    }
-      
-   gauss(str, k, n, 0, 0);
-  
-   int r = rank(str, k, n);
-   if (r == k)
+   //printmat(str,n,k);
+   //printf("\n");   
+   gauss(str, n, k, 0, 0);
+//printmat(str,n,k);
+   int r = rank(str, n, k);
+   if (r == n)
       printf("rank=%d, independent", r);
    else printf("rank=%d, dependent", r);
 
-   for (int i = 0; i < k; i++)
+   for (int i = 0; i < n; i++)
       free(str[i]);
    free(str);
 }
