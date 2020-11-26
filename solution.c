@@ -10,6 +10,7 @@ double det(double** mas, int n){
    return d;
 }
 
+
 void gauss(double** mas, int i, int j, int i0, int j0){
    if (i0 == (i - 1))
       return;
@@ -69,22 +70,119 @@ void gauss(double** mas, int i, int j, int i0, int j0){
    return;
 }
 
+
+
+void remove_i_j(double **arr1,double **arr2, int i1, int j1, int n){
+  //double** arr2 = (double**)malloc(sizeof(double*) * (n-1));
+  for (int i = 0; i < n; i++){
+    //arr2[i] = (double*)malloc(sizeof(double) * n);
+    for (int j = 0; j < n; j++){
+      if((i!=i1)&&(j!=j1)){
+        arr2[i >= i1 ? i - 1 : i][j >= j1 ? j - 1 : j] = arr1[i][j];
+      }
+      }
+    }
+  }
+
+
+void transpose_matrix(double **arr1, double **arr2, int n){
+  double **arrPtr1 = arr1;
+  double **arrPtr2 = arr2;
+  int i, j;
+ 
+  for (i = 0; i < n; i++) {
+    for (j = 0; j < n; j++)
+      arrPtr2[j][i] = arrPtr1[i][j];
+  }
+}
+
+void copymat(double** mas,double** mas1, int n){
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			mas1[i][j]=mas[i][j];
+			}
+	}
+}
+void printmat(double** mas, int n){
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			printf("%lf ",mas[i][j]);
+			}
+		printf("\n");
+		}
+	
+	}
+
+
+void smulti(double **m, int n, double a){
+    for(int row = 0; row < n; row++)
+        for(int col = 0; col < n; col++){
+            m[row][col] *= a;
+        }
+}
+
 int main(void){
    int n;
-   printf("Enter n\n");
+   printf("Enter n:\n");
    scanf("%d", &n);
    double** str = (double**)malloc(sizeof(double*) * n);
+   double** str_c = (double**)malloc(sizeof(double*) * n);
+   double** tr = (double**)malloc(sizeof(double*) * n);
+   double** minor = (double**)malloc(sizeof(double*) * n);
+   double** str_n = (double**)malloc(sizeof(double*) * (n-1));
+
    for (int i = 0; i < n; i++){
       str[i] = (double*)malloc(sizeof(double) * n);
-      for (int j = 0; j < n; j++)
+      str_c[i] = (double*)malloc(sizeof(double) * n);
+      minor[i] = (double*)malloc(sizeof(double) * n);
+      tr[i] = (double*)malloc(sizeof(double) * n);
+      for (int j = 0; j < n; j++){
          scanf("%lf", &str[i][j]);
+        //printf("%lf", str[i][j]);
+         tr[i][j]=0;
+         str_c[i][j]=0;
+         minor[i][j]=0;
+         }
+        // printf("\n");
    }
-      
+
+   for (int i = 0; i < n-1; i++){
+     str_n[i] = (double*)malloc(sizeof(double) * (n-1));
+     for (int j = 0; j < n-1; j++){
+       str_n[i][j]=0;
+     }
+   } 
+    copymat(str, str_c, n);
    gauss(str, n, n, 0, 0);
   
    double d = det(str, n);
+  if (d==0){
+    printf("no way to find inverse matrix");
+  }
+  else{
+    
+    //gauss_wo(str, n, n, 0, 0, i_r, j_r);
+    copymat(str_c, tr, n);
+    //printmat(str_c, n);
+    remove_i_j(str_c, str_n, 0, 0, n);
+    //printmat(str_n,n-1);
+    for(int i = 0; i < n; i++){
+      for(int j = 0; j < n; j++){
+        copymat(str_c, tr, n);
+        remove_i_j(str_c, str_n, i, j, n);
 
-   printf("determinant: %lf", d);
+        gauss(str_n, n-1, n-1, 0, 0);
+        minor[i][j]=pow(-1,i+j)*det(str_n,n-1);
+      }
+
+    }
+    transpose_matrix(minor, tr, n);
+    smulti(tr, n, 1/d);
+    printf("Inverse matrix:\n");
+    printmat(tr,n);
+
+  }
+  //printf("determinant: %lf", d);
    
    for (int i = 0; i < n; i++)
       free(str[i]);
